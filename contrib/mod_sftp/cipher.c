@@ -472,7 +472,7 @@ int sftp_cipher_set_read_key(pool *p, const EVP_MD *hash, const BIGNUM *k,
       cipher->algo);
   }
 
-  if (EVP_CipherInit(cipher_ctx, NULL, cipher->key, NULL, -1) != 1) {
+  if (EVP_CipherInit(cipher_ctx, cipher->cipher, cipher->key, NULL, -1) != 1) {
     (void) pr_log_writefile(sftp_logfd, MOD_SFTP_VERSION,
       "error re-initializing %s cipher for decryption: %s", cipher->algo,
       sftp_crypto_get_errors());
@@ -661,7 +661,7 @@ int sftp_cipher_set_write_key(pool *p, const EVP_MD *hash, const BIGNUM *k,
       cipher->algo);
   }
 
-  if (EVP_CipherInit(cipher_ctx, NULL, cipher->key, NULL, -1) != 1) {
+  if (EVP_CipherInit(cipher_ctx, cipher->cipher, cipher->key, NULL, -1) != 1) {
     (void) pr_log_writefile(sftp_logfd, MOD_SFTP_VERSION,
       "error re-initializing %s cipher for encryption: %s", cipher->algo,
       sftp_crypto_get_errors());
